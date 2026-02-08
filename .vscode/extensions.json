@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        // For Python stuff:
+        "ms-python.python",
+        "charliermarsh.ruff",
+        // For config files:
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml"
+    ]
+}

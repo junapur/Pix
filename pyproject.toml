@@ -1,0 +1,63 @@
+[project]
+name = "pix"
+version = "0.1.0"
+description = "A Discord Bot for image manipulation."
+readme = "README.md"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.14"
+authors = [{ name = "June", email = "junapur@proton.me" }]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/junapur/Pix"
+Repository = "https://github.com/junapur/Pix.git"
+Issues = "https://github.com/junapur/Pix/issues"
+
+[project.scripts]
+pix = "pix:main"
+
+[build-system]
+requires = ["uv_build>=0.10.0,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "nox>=2025.11.12",
+    "pyright[nodejs]>=1.1.408",
+    "ruff>=0.15.0",
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+
+[tool.ruff.lint]
+select = [
+    "ASYNC", # flake8-async
+    "S",     # flake8-bandit
+    "BLE",   # flake8-blind-except
+    "FBT",   # flake8-boolean-trap
+    "B",     # flake8-bugbear
+    "A",     # flake8-builtins
+    "C4",    # flake8-comprehensions
+    "EM",    # flake8-errmsg
+    "ISC",   # flake8-implicit-str-concat
+    "LOG",   # flake8-logging
+    "G",     # flake8-logging-format
+    "PIE",   # flake8-pie
+    "RSE",   # flake8-raise
+    "RET",   # flake8-return
+    "SIM",   # flake8-simplify
+    "PTH",   # flake8-use-pathlib
+    "I",     # isort
+    "N",     # pep8-naming
+    "E",     # pycodestyle (errors)
+    "F",     # pyflakes
+]
+
+ignore = [
+    # The following rules conflict with Ruff's formatter:
+    "E111",
+    "E114",
+    "E117",
+    "E501",
+]
