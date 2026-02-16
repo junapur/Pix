@@ -9,6 +9,7 @@ authors = [{ name = "June", email = "junapur@proton.me" }]
 dependencies = [
     "pydantic>=2.12.5",
     "pydantic-settings>=2.12.0",
+    "rich>=14.3.2",
 ]
 
 [project.urls]
