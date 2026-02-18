@@ -41,6 +41,20 @@ def load_settings() -> Settings:
         raise SystemExit(1) from e
 
 
+def _format_loc(loc: tuple[str | int, ...]) -> str:
+    path = ""
+
+    for idx, segment in enumerate(loc):
+        if isinstance(segment, str):
+            if idx > 0:
+                path += "."
+            path += segment
+        else:
+            path += f"[{segment}]"
+
+    return path
+
+
 def _display_errors(error: ValidationError) -> None:
     console = Console(stderr=True)
     count = error.error_count()
@@ -51,7 +65,7 @@ def _display_errors(error: ValidationError) -> None:
     for err in error.errors():
         msg = err["msg"]
         value = repr(err["input"])
-        field = ".".join(str(loc) for loc in err["loc"])
+        field = _format_loc(err["loc"])
 
         tree.add(f"[bold]{field}[/]: {msg} - got [italic red]{value}[/]")
 
