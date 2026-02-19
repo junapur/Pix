@@ -6,6 +6,7 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.traceback import install
 
+import pix.extensions
 from pix.settings import Settings, load_settings
 
 logger = logging.getLogger(__name__)
@@ -30,7 +31,7 @@ def main() -> None:
         registry = client.di.registry_for(lightbulb.di.Contexts.DEFAULT)
         registry.register_value(Settings, settings)
 
-        await client.load_extensions()
+        await client.load_extensions_from_package(pix.extensions)
         await client.start()
 
     try:
