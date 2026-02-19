@@ -7,7 +7,6 @@ from pydantic_settings import (
     SettingsConfigDict,
 )
 from rich.console import Console
-from rich.tree import Tree
 
 
 class Settings(BaseSettings):
@@ -45,29 +44,29 @@ def _format_loc(loc: tuple[str | int, ...]) -> str:
     path = ""
 
     for idx, segment in enumerate(loc):
-        if isinstance(segment, str):
-            if idx > 0:
-                path += "."
-            path += segment
-        else:
-            path += f"[{segment}]"
+        match segment:
+            case str():
+                if idx > 0:
+                    path += "."
+                path += segment
+            case int():
+                path += f"[{segment}]"
 
     return path
 
 
 def _display_errors(error: ValidationError) -> None:
-    console = Console(stderr=True)
+    console = Console(stderr=True, highlight=False)
     count = error.error_count()
     plural = "s" if count > 1 else ""
 
-    tree = Tree(f"[red]Failed to validate settings ({count} error{plural})[/]")
+    console.print(f"[red]Failed to validate settings ({count} error{plural}):[/]")
 
     for err in error.errors():
         msg = err["msg"]
         value = repr(err["input"])
-        field = _format_loc(err["loc"])
+        loc = _format_loc(err["loc"])
 
-        tree.add(f"[bold]{field}[/]: {msg} - got [italic red]{value}[/]")
+        console.print(f"* [bold]{loc}[/]: {msg} - got [italic red]{value}[/].")
 
-    console.print(tree)
     console.print("\n[dim]Tip: Check your .env file or environment variables.[/]")
